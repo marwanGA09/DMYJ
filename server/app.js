@@ -3,6 +3,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const userRouter = require('./routers/usersRouter');
+const AppError = require('./utils/AppError');
+const errorController = require('./controllers/errorController');
 
 const app = express();
 
@@ -16,5 +18,12 @@ app.use(express.json());
 // });
 
 app.use('/users', userRouter);
+
+app.use('*', (req, res, next) => {
+  next(
+    new AppError(`There is no route with this ${req.originalUrl} address`, 500)
+  );
+});
+app.use(errorController);
 
 module.exports = app;
