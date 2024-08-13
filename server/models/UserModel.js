@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const uniqueValidator = require('mongoose-unique-validator');
+const mongooseUniqueValidator = require('mongoose-unique-validator');
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -44,9 +44,9 @@ userSchema.pre('save', async function (next) {
 
 // The unique constraint doesn’t directly provide custom error messages like the required validation does. To customize the error message for unique validation, you’ll need to handle it in your error-handling middleware or use a plugin like mongoose-unique-validator.
 
-// USE uniqueValidator instead of custom error handling inside errorhandler middle ware
+// USE mongooseUniqueValidator instead of custom error handling inside errorhandler middle ware
 
-userSchema.plugin(uniqueValidator, {
+userSchema.plugin(mongooseUniqueValidator, {
   message: '{PATH} is already in use. Please choose another one.',
 });
 
