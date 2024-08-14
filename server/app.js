@@ -4,6 +4,7 @@ const morgan = require('morgan');
 
 const usersRouter = require('./routers/usersRouter');
 const membersRouter = require('./routers/membersRouter');
+const paymentsRouter = require('./routers/paymentsRouter');
 const AppError = require('./utils/AppError');
 const errorController = require('./controllers/errorController');
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use('/users', usersRouter);
 app.use('/members', membersRouter);
+app.use('/payments', paymentsRouter);
 
 app.use('*', (req, res, next) => {
   next(
