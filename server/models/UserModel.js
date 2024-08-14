@@ -14,6 +14,13 @@ const userSchema = new mongoose.Schema(
       unique: [true, 'find another name, this is used by other user'],
       required: [true, 'user should have user name'],
     },
+    phone: {
+      type: String,
+      required: [true, 'user should have phone number'],
+      unique: [true, 'this phone is used by other user'],
+      // remove this default
+      default: '1234567890',
+    },
     sector: {
       type: String,
       default: 'economy',
