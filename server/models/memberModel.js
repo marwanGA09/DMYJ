@@ -8,11 +8,21 @@ const memberSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    sex: {
+      type: String,
+      enum: ['male', 'female'],
+      required: [true, 'every member should have sex data'],
+    },
+    bookNumber: {
+      type: Number,
+      required: [true, 'Every member should have unique Code'],
+    },
     profession: {
       type: String,
     },
     address: {
       type: String,
+      required: [true, 'member should have address'],
     },
     phone: {
       type: String,
@@ -34,11 +44,17 @@ const memberSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Should have userId created this member'],
     },
+    signedDate: {
+      type: Date,
+      default: new Date.now(),
+    },
+    dateOfBirth: {
+      type: Date,
+    },
     note: {
       type: String,
       trim: true,
       lowercase: true,
-      default: 'every thing is normal',
     },
   },
   { timestamps: true }
