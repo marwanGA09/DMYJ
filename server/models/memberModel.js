@@ -27,7 +27,8 @@ const memberSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: [true, 'Member should have phone number'],
-      unique: [true, 'this phone is used by other member'],
+      // DON'T FORGET REMOVING BELLOW COMMENT
+      // unique: [true, 'this phone is used by other member'],
     },
     email: { type: String },
     membershipPaymentAmount: {
@@ -46,7 +47,7 @@ const memberSchema = new mongoose.Schema(
     },
     signedDate: {
       type: Date,
-      default: new Date.now(),
+      default: Date.now,
     },
     dateOfBirth: {
       type: Date,
