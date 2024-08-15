@@ -1,9 +1,38 @@
 const catchAsync = require('../utils/catchAsync');
+const MemberModel = require('./../models/memberModel');
 
 const getAllMembers = catchAsync(async (req, res, next) => {
-  console.log('get all members');
+  const queryObj = { ...req.query };
+  const excludeStr = ['limit', 'sort', 'field', 'page'];
+  excludeStr.forEach((el) => delete queryObj[el]);
+  // FILTERING
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (op) => `$${op}`);
+  let query = MemberModel.find(JSON.parse(queryStr));
+
+  // SORTING
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort('name -signedDate');
+  }
+
+  // fields
+  if (req.query.field) {
+    const select = req.query.field.split(',').join(' ');
+    query = query.select(`${select}`);
+  } else {
+    query = query.select('-__v -updatedAt');
+  }
+
+  const members = await query;
   return res.status(200).json({
     status: 'success',
+    totalResult: members.length,
+    data: {
+      members,
+    },
   });
 });
 
