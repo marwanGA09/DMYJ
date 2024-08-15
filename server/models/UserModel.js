@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: [true, 'user should have phone number'],
-      unique: [true, 'this phone is used by other user'],
+      // DON'T FORGET REMOVING BELLOW COMMENT
+      // unique: [true, 'this phone is used by other user'],
       // remove this default
       default: '1234567890',
     },
@@ -35,6 +36,8 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       required: true,
       select: false,
+      // remove this default
+      default: 'pass1234',
     },
   },
   { timestamps: true }
