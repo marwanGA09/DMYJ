@@ -1,6 +1,6 @@
 function catchAsync(fn) {
   return (req, res, next) => {
-    fn(req, res).catch((err) => {
+    fn(req, res, next).catch((err) => {
       //   console.log('catch', err);
       next(err);
     });
@@ -8,3 +8,9 @@ function catchAsync(fn) {
 }
 
 module.exports = catchAsync;
+
+// module.exports = (fn) => {
+//   return (req, res, next) => {
+//     fn(req, res, next).catch(next);
+//   };
+// };

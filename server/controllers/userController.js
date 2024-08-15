@@ -1,9 +1,10 @@
 const catchAsync = require('../utils/catchAsync');
 const UserModel = require('./../models/UserModel');
+const AppError = require('./../utils/AppError');
 
 const getAllUsers = catchAsync(async (req, res, next) => {
-  console.log('getAll user');
-  console.log(req.query);
+  // console.log('getAll user');
+  // console.log(req.query);
   const query = UserModel.find().sort('role name').select('-__v -updatedAt');
   const users = await query;
   return res.status(200).json({ status: 'success', data: { users } });
@@ -13,6 +14,11 @@ const getUserById = catchAsync(async (req, res, next) => {
   console.log('get user by id', req.params.id);
   const query = UserModel.findById(req.params.id).select('-__v -updatedAt');
   const user = await query;
+  if (!user) {
+    return next(
+      new AppError(`No User is found with this id: ${req.params.id}`, 404)
+    );
+  }
   return res.status(200).json({
     status: 'success',
     data: {
