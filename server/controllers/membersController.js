@@ -37,7 +37,6 @@ const getMemberByID = catchAsync(async (req, res, next) => {
 
 const createMember = catchAsync(async (req, res, next) => {
   const newMember = await MemberModel.create(req.body);
-  console.log();
   res.status(200).json({
     status: 'success',
     data: {
@@ -47,16 +46,37 @@ const createMember = catchAsync(async (req, res, next) => {
 });
 
 const updateMember = catchAsync(async (req, res, next) => {
-  console.log('update member');
+  const updated = await MemberModel.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updated) {
+    return next(
+      new AppError(`No member is found with this id: ${req.params.id}`, 404)
+    );
+  }
+
   res.status(200).json({
     status: 'success',
+    data: {
+      member: updated,
+    },
   });
 });
 
 const deleteMember = catchAsync(async (req, res, next) => {
-  console.log('delete member');
+  const deleteMem = await MemberModel.findByIdAndDelete(req.params.id);
+
+  if (!deleteMem) {
+    return next(
+      new AppError(`No member is found with this id: ${req.params.id}`, 404)
+    );
+  }
+
   res.status(200).json({
     status: 'success',
+    data: null,
   });
 });
 
