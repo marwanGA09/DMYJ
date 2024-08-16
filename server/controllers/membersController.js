@@ -36,10 +36,13 @@ const getMemberByID = catchAsync(async (req, res, next) => {
 });
 
 const createMember = catchAsync(async (req, res, next) => {
-  console.log('create Member');
+  const newMember = await MemberModel.create(req.body);
   console.log();
   res.status(200).json({
     status: 'success',
+    data: {
+      member: newMember,
+    },
   });
 });
 

@@ -15,7 +15,8 @@ const memberSchema = new mongoose.Schema(
     },
     bookNumber: {
       type: Number,
-      required: [true, 'Every member should have unique Code'],
+      required: [true, 'Every member should have bookNumber Code'],
+      unique: [true, 'every member should have unique bookNumber'],
     },
     profession: {
       type: String,
@@ -26,6 +27,7 @@ const memberSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
+      minlength: 10,
       required: [true, 'Member should have phone number'],
       // DON'T FORGET REMOVING BELLOW COMMENT
       // unique: [true, 'this phone is used by other member'],
