@@ -1,7 +1,7 @@
 const APIFeatures = require('../utils/ApiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const MemberModel = require('./../models/memberModel');
-
+const AppError = require('./../utils/AppError');
 const getAllMembers = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(MemberModel.find(), req.query)
     .filter()
@@ -19,9 +19,19 @@ const getAllMembers = catchAsync(async (req, res, next) => {
 });
 
 const getMemberByID = catchAsync(async (req, res, next) => {
-  console.log(req.params.id);
+  const member = await MemberModel.findById(req.params.id);
+
+  if (!member) {
+    return next(
+      new AppError(`No member is found with this id: ${req.params.id}`, 404)
+    );
+  }
+
   res.status(200).json({
     status: 'success',
+    data: {
+      member,
+    },
   });
 });
 
