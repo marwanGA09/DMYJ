@@ -31,7 +31,7 @@ const createUser = catchAsync(async (req, res, next) => {
 
   console.log(name, userName, sector, role, password);
 
-  const user = await new UserModel({
+  const user = await UserModel.create({
     name,
     userName,
     sector,

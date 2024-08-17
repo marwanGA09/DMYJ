@@ -42,7 +42,7 @@ const memberSchema = new mongoose.Schema(
       type: String,
       default: 'default-profile-image',
     },
-    createdByUser: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'Should have userId created this member'],
