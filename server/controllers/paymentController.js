@@ -1,5 +1,6 @@
 // Do not forget fixing status code of all response
 
+const PaymentModel = require('../models/paymentModel');
 const catchAsync = require('./../utils/catchAsync');
 
 const getAllPayments = catchAsync(async (req, res, next) => {
@@ -10,9 +11,12 @@ const getAllPayments = catchAsync(async (req, res, next) => {
 });
 const createPayments = catchAsync(async (req, res, next) => {
   console.log('create payments');
-  console.log(req.body);
+  const newPayment = await PaymentModel.create(req.body);
   return res.status(200).json({
     status: 'success',
+    data: {
+      payment: newPayment,
+    },
   });
 });
 const getPaymentById = catchAsync(async (req, res, next) => {
