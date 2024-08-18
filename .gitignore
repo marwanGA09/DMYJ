@@ -27,4 +27,4 @@ server/.env
 server/csv/users.csv
 note.md
 server/json/members.json
-server/utils/readJSON.js
+
