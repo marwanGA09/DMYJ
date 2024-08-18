@@ -5,8 +5,8 @@ const AppError = require('./../utils/AppError');
 const getAllMembers = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(MemberModel.find(), req.query)
     .filter()
-    .sort()
-    .field();
+    .sort('name -signedDate')
+    .field('-__v -updatedAt');
 
   const members = await features.query;
   return res.status(200).json({
