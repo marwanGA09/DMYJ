@@ -5,7 +5,12 @@ const catchAsync = require('./../utils/catchAsync');
 const APIFeatures = require('./../utils/ApiFeatures');
 
 const getAllPayments = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(PaymentModel.find(), req.query)
+  const features = new APIFeatures(
+    PaymentModel.find()
+      .populate('memberId', 'name bookNumber')
+      .populate('userId', 'name userName sector'),
+    req.query
+  )
     .filter()
     .sort('createdAt -monthlyPaymentAmount')
     .field('-__v -updatedAt');
