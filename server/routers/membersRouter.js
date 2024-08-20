@@ -5,11 +5,12 @@ const {
   getMemberByID,
   updateMember,
   deleteMember,
+  updateMemberAll,
 } = require('../controllers/membersController');
 
 const router = express.Router();
 
-router.route('/').get(getAllMembers).post(createMember);
+router.route('/').get(getAllMembers).post(createMember).patch(updateMemberAll);
 router
   .route('/:id')
   .get(getMemberByID)

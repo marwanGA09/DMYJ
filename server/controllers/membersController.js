@@ -3,7 +3,10 @@ const catchAsync = require('../utils/catchAsync');
 const MemberModel = require('./../models/memberModel');
 const AppError = require('./../utils/AppError');
 const getAllMembers = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(MemberModel.find(), req.query)
+  const features = new APIFeatures(
+    MemberModel.find().populate('userId', 'name userName sector'),
+    req.query
+  )
     .filter()
     .sort('name -signedDate')
     .field('-__v -updatedAt');
@@ -64,6 +67,22 @@ const updateMember = catchAsync(async (req, res, next) => {
     },
   });
 });
+const updateMemberAll = catchAsync(async (req, res, next) => {
+  const updated = await MemberModel.updateMany({}, {});
+
+  if (!updated) {
+    return next(
+      new AppError(`No member is found with this id: ${req.params.id}`, 404)
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      member: updated,
+    },
+  });
+});
 
 const deleteMember = catchAsync(async (req, res, next) => {
   const deleteMem = await MemberModel.findByIdAndDelete(req.params.id);
@@ -86,4 +105,5 @@ module.exports = {
   createMember,
   updateMember,
   deleteMember,
+  updateMemberAll,
 };
