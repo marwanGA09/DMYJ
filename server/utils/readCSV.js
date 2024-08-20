@@ -5,7 +5,7 @@ const csv = require('csv-parser');
 const readCSV = async () => {};
 
 const DATABASE_PASSWORD = '.......................';
-const DATABASE_URL = `......................................................`;
+const DATABASE_URL = '.......................';
 const DB_URL = DATABASE_URL.replace('<PASSWORD>', DATABASE_PASSWORD);
 
 mongoose.connect(DB_URL).then((conn) => {
@@ -17,7 +17,7 @@ fs.createReadStream(`./../csv/users.csv`)
   .on('data', async (data) => {
     try {
       console.log('data', data);
-      const users = await UserModel.insertMany(data);
+      const users = await UserModel.create(data);
       console.log('users', users);
     } catch (err) {
       console.log('Error', err);

@@ -2,8 +2,8 @@ const fs = require('fs');
 const MembersModel = require('../models/memberModel');
 const mongoose = require('mongoose');
 
-const PASSWORD = `.............................`;
-const DATABASE_URL = `..............................................................`;
+const PASSWORD = `....................`;
+const DATABASE_URL = `....................`;
 
 const DB_URL = DATABASE_URL.replace('<PASSWORD>', PASSWORD);
 
