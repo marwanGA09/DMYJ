@@ -7,10 +7,14 @@ const {
   deleteMember,
   updateMemberAll,
 } = require('../controllers/membersController');
-
+const { protected } = require('./../controllers/authController');
 const router = express.Router();
 
-router.route('/').get(getAllMembers).post(createMember).patch(updateMemberAll);
+router
+  .route('/')
+  .get(protected, getAllMembers)
+  .post(createMember)
+  .patch(updateMemberAll);
 router
   .route('/:id')
   .get(getMemberByID)
