@@ -67,14 +67,10 @@ const updateMember = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// DEVELOPMENTAL
 const updateMemberAll = catchAsync(async (req, res, next) => {
   const updated = await MemberModel.updateMany({}, {});
-
-  if (!updated) {
-    return next(
-      new AppError(`No member is found with this id: ${req.params.id}`, 404)
-    );
-  }
 
   res.status(200).json({
     status: 'success',

@@ -36,15 +36,14 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       required: true,
       select: false,
-      // remove this default
-      default: 'pass1234',
     },
   },
   { timestamps: true }
 );
 
 userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
+  console.log('save');
+  if (this.isNew || this.isModified('password')) {
     console.log('password before hashing', this.password);
     this.password = await bcrypt.hash(this.password, 12);
     console.log('password after hashing', this.password);
