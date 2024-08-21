@@ -12,7 +12,7 @@ const signIn = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.findOne({ userName }).select('+password');
-  if (!(user && (await bcrypt.compare(password, user.password)))) {
+  if (!(user && user.checkPassword(password, user.password))) {
     return next(new AppError('incorrect username or password', 400));
   }
   console.log(user._id);

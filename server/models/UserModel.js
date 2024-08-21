@@ -51,6 +51,13 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+// SCHEMA METHOD
+userSchema.methods.checkPassword = async function (
+  password,
+  encryptedPassword
+) {
+  return await bcrypt.compare(password, encryptedPassword);
+};
 // The unique constraint doesn’t directly provide custom error messages like the required validation does. To customize the error message for unique validation, you’ll need to handle it in your error-handling middleware or use a plugin like mongoose-unique-validator.
 
 // USE mongooseUniqueValidator instead of custom error handling inside errorhandler middle ware
