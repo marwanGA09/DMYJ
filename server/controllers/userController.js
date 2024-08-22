@@ -37,7 +37,7 @@ const createUser = catchAsync(async (req, res, next) => {
     sector,
     role,
     password,
-  }).save();
+  });
   // console.log(user);
   return res.status(201).json({
     status: 'success',
