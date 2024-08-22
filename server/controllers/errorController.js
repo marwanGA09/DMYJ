@@ -38,7 +38,7 @@ const handleValidationError = (err) => {
 };
 
 const errorController = (err, req, res, next) => {
-  console.log(err.message);
+  console.log('error', err.message);
 
   err.message = err.message || 'some thing goes very wrong';
   // status and statusCode can be added for mongoose error
