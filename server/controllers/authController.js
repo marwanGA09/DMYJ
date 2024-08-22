@@ -24,18 +24,22 @@ const signIn = catchAsync(async (req, res, next) => {
 });
 
 const protected = catchAsync(async (req, res, next) => {
-  let token;
+  let token, decodedToken;
+  console.log(req.headers.authorization);
   if (!req.headers?.authorization.startsWith('Bearer')) {
     return new AppError('please login first', 401);
   } else {
     token = req.headers.authorization.split(' ')[1];
   }
   try {
-    const decodedToken = jsToken.verify(token, process.env.TOKEN_SECRET);
+    decodedToken = jsToken.verify(token, process.env.TOKEN_SECRET);
   } catch (err) {
     next(new AppError(`${err.message} please login`, 401));
   }
-
+  const currentUser = await User.findById(decodedToken.id);
+  if (!currentUser) {
+    return next(new AppError('user does not exist', 404));
+  }
   next();
 });
 

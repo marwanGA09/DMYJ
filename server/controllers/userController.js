@@ -11,7 +11,7 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 const getUserById = catchAsync(async (req, res, next) => {
-  console.log('get user by id', req.params.id);
+  // console.log('get user by id', req.params.id);
   const query = UserModel.findById(req.params.id).select('-__v -updatedAt');
   const user = await query;
   if (!user) {
@@ -29,7 +29,7 @@ const getUserById = catchAsync(async (req, res, next) => {
 const createUser = catchAsync(async (req, res, next) => {
   const { name, userName, sector, role, password } = req.body;
 
-  console.log(name, userName, sector, role, password);
+  // console.log(name, userName, sector, role, password);
 
   const user = await UserModel.create({
     name,
@@ -38,7 +38,7 @@ const createUser = catchAsync(async (req, res, next) => {
     role,
     password,
   }).save();
-  console.log(user);
+  // console.log(user);
   return res.status(201).json({
     status: 'success',
     data: {
